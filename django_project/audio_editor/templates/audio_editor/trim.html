@@ -1,0 +1,87 @@
+{% extends "audio_editor/base.html" %}
+{% load static %}
+
+{% block scripts %}
+  <script src="{% static 'audio_editor/scripts/trim.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <!-- <script src="{% static 'audio_editor/scripts/trim.js' %}" defer></script> -->
+  <link rel="stylesheet" href="{% static 'audio_editor/homecss/style1.css' %}">
+
+  <h2>Trim Your Audio</h2>
+  <input type="file" id="upload" accept="audio/*"><br><br>
+  <div class="top-toolbar">
+    <button class="toolbar-btn">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 20L18 4M12 12L6 4M12 12L18 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Trim
+    </button>
+    <button class="toolbar-btn icon-only">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15.54 8.46C16.4774 9.39764 17.004 10.6692 17.004 11.995C17.004 13.3208 16.4774 14.5924 15.54 15.53" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Volume
+    </button>
+    <button class="toolbar-btn icon-only">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23 4V10H17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1 20V14H7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.51 9.00001C4.01717 7.56345 4.87913 6.27451 6.01547 5.27113C7.1518 4.26774 8.52547 3.58059 10.0083 3.26763C11.4911 2.95467 13.0348 3.02505 14.4761 3.47306C15.9175 3.92106 17.2137 4.73221 18.24 5.83001L23 10M1 14L5.76 18.17C6.78626 19.2678 8.08247 20.079 9.52384 20.527C10.9652 20.975 12.5089 21.0454 13.9917 20.7324C15.4745 20.4194 16.8482 19.7323 17.9845 18.7289C19.1209 17.7255 19.9828 16.4366 20.49 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Speed
+    </button>
+    <button class="toolbar-btn icon-only">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 18H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 18H3.01" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 12H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 12H3.01" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 6H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3 6H3.01" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Pitch
+    </button>
+    <!-- <button class="toolbar-btn icon-only">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button> -->
+  </div>
+
+  <!-- <button id="playPauseFullBtn">Play Full</button> -->
+  
+
+  <!-- <div id="waveform-background"> -->
+    <div id="waveform-wrapper">
+      <div id="waveform"></div>
+      <div id="scrubber"></div>
+    </div>
+  <!-- </div> -->
+  <button id="playPauseBtn">Play Region</button>
+
+  <div id="customSliderContainer" style="display: none; width: 90%; margin: 20px auto;">
+    <input id="myRange" class="slider" value="50" max="100" min="0" type="range">
+    <span id="volumeDisplay" style="margin-left: 10px; font-weight: bold; color: #333;">100%</span>
+  </div>
+  <div id="pitchSliderContainer" style="display: none; width: 90%; margin: 20px auto;">
+    <input id="pitchSlider" class="slider" type="range" min="-100" max="100" value="0">
+    <span id="pitchDisplay" style="margin-left: 10px; font-weight: bold; color: #333;">0%</span>
+  </div>
+  
+  
+  <div id="times">Start: 0.00s — End: 0.00s</div><br>
+
+  <select id="exportOption">
+    <option value="trim">Download Trimmed Part</option>
+    <option value="remove">Download Without Trimmed Part</option>
+  </select>
+  <button id="trimBtn">Export</button>
+
+  <h3 id="trimmedTitle" style="display:none;">Trimmed Audio Clips:</h3>
+  <div id="trimmedSection"></div>
+{% endblock %}
