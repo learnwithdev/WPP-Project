@@ -1,0 +1,17 @@
+{% extends 'audio_editor/base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'users/css/logout.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="logout-container">
+    <h2>You have been logged out</h2>
+    <p>Redirecting to the home page in a few seconds...</p>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'users/js/logout.js' %}"></script>
+{% endblock %}

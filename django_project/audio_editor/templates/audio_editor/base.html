@@ -8,7 +8,7 @@
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <script src="https://unpkg.com/@wavesurfer/regions/dist/wavesurfer.regions.min.js"></script>
   <link rel="stylesheet" href="{% static 'audio_editor/homecss/style.css' %}">
-  <script src="{% static 'audio_editor/scripts/homejs.js' %}"></script>
+  {% block css %}{% endblock %}
   <!-- <script src="{% static 'audio_editor/scripts/trim.js' %}"></script> -->
 </head>
 <body>
@@ -39,14 +39,32 @@
       </div>
     </div>
     <div class="nav-links">
-      <a href="#">Login</a>
-      <a href="#">Register</a>
+      {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post" id="logout-form">
+          {% csrf_token %}
+          <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();">Logout</a>
+        </form>
+        <!-- <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light">Logout</button>
+            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> -->
+        <!--</form> -->
+      {% else %}
+        <!-- <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a> -->
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+      
     </div>
   </div>
   {% block content%}{% endblock %}
-  {% block scripts %}{% endblock %}
+
   <footer>
     <p>© 2025 BeatStudio | <a href="#">Contact</a> | <a href="#">Settings</a></p>
   </footer>
+  <script src="{% static 'audio_editor/scripts/homejs.js' %}"></script>
+  {% block scripts %}
+  {% endblock %}
 </body>
 </html>

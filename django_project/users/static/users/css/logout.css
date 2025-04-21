@@ -1,0 +1,13 @@
+.logout-container {
+  text-align: center;
+  margin-top: 50px;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+.logout-container h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+.logout-container p {
+  font-size: 1.2em;
+}

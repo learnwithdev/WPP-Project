@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Editor - Login</title>
+  <link rel="stylesheet" href="{% static 'users/css/login.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page" style="background-image: url('{% static 'users/images/audioimg.jpeg' %}'); background-size: cover;">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1>🎧 Audio Editor</h1>
+      {% if form.errors %}
+        <p class="error-message">Invalid username or password. Please try again.</p>
+      {% endif %}
+      <form id="loginForm" method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="input-group">
+          {{ form.username }}
+          <label>Username</label>
+          {% if form.username.errors %}
+            <small class="error-message">{{ form.username.errors.as_text }}</small>
+          {% endif %}
+        </div>
+        <div class="input-group">
+          {{ form.password }}
+          <label>Password</label>
+          {% if form.password.errors %}
+            <small class="error-message">{{ form.password.errors.as_text }}</small>
+          {% endif %}
+        </div>
+
+        <!-- CAPTCHA Section -->
+        <div class="captcha-container">
+          <div class="captcha-box">
+            <span id="captchaText" class="captcha-text"></span>
+            <button type="button" id="refreshCaptcha" title="Refresh CAPTCHA">⟳</button>
+          </div>
+          <div class="input-group">
+            {{ form.captcha }}
+            <label>Enter CAPTCHA</label>
+          </div>
+          <small id="captchaError" class="error-message"></small>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+        <small class="text-muted ml-2">
+          <a href="{% url 'password_reset' %}" style="color: white;">Forgot Password?</a>
+      </small>
+      </form>
+    </div>
+  </div>
+  <script src="{% static 'users/js/login.js' %}"></script>
+</body>
+</html>
