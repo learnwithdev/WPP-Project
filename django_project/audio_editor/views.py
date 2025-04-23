@@ -6,3 +6,5 @@ def home(request):
 
 def edit_view(request):
     return render(request, 'audio_editor/trimWorking.html')
+def merge_append(request):
+    return render(request, 'audio_editor/merge_append.html')

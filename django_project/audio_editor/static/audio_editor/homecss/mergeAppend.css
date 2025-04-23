@@ -1,0 +1,48 @@
+#operation {
+    display: block;
+    margin: 1rem auto;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    background-color: #1e1e2f;
+    color: #00e6e6;
+    border: 1px solid #00e6e6;
+    outline: none;
+    width: 250px;
+    text-align: center;
+  }
+
+  #operation:focus {
+    box-shadow: 0 0 10px #00ffff;
+  }
+
+  .waveform-wrapper {
+    width: 90%;
+    max-width: 1000px;
+    margin: 1rem auto;
+    position: relative;
+    border: 2px solid #00e6e6;
+    border-radius: 12px;
+    background-color: #111;
+    height: 160px;
+    overflow: hidden;
+  }
+
+  input[type="file"] {
+    display: block;
+    margin: 1rem auto;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #00e6e6;
+    background-color: #1e1e2f;
+    color: #00e6e6;
+    cursor: pointer;
+    width: 90%;
+    max-width: 500px;
+    transition: all 0.3s ease;
+  }
+
+  input[type="file"]:hover {
+    background-color: #292942;
+    box-shadow: 0 0 10px #00ffff;
+  }
