@@ -11,18 +11,20 @@
   {% if downloads %}
     <div class="download-list">
       {% for audio in downloads %}
-        <div class="download-card">
-          <div class="download-filename">{{ audio.file_name }}</div>
-          <div class="download-audio">
-            <audio controls src="{{ audio.file_path.url }}"></audio>
-          </div>
-          <div class="download-footer">
-            <span class="download-time">{{ audio.created_at|date:"Y-m-d H:i" }}</span>
-            <a href="{{ audio.file_path.url }}" download class="download-button">
-              ⬇ Download
-            </a>
+      <div class="download-card" id="audio-{{ audio.id }}">
+        <div class="download-filename">{{ audio.file_name }}</div>
+        <div id="waveform-{{ audio.id }}" class="waveform-preview" 
+            data-audio-id="{{ audio.id }}" 
+            data-audio-url="{{ audio.file_path.url }}">
+        </div>
+        <div class="download-footer">
+          <span class="download-time">{{ audio.created_at|date:"Y-m-d H:i" }}</span>
+          <div class="download-actions">
+            <a href="{{ audio.file_path.url }}" download class="download-button">⬇ Download</a>
+            <button class="delete-button" onclick="deleteClip('audio-{{ audio.id }}', '{{ audio.id }}')">🗑 Delete</button>
           </div>
         </div>
+      </div>      
       {% endfor %}
     </div>
   {% else %}
@@ -31,4 +33,5 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="{% static 'audio_editor/scripts/downloads.js' %}"></script>
 {% endblock %}

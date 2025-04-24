@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class AudioDownload(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='downloads')
     file_name = models.CharField(max_length=255)
     file_path = models.FileField(upload_to='downloads/')
     created_at = models.DateTimeField(auto_now_add=True)
