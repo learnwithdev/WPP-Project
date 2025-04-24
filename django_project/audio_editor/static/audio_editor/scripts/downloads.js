@@ -14,32 +14,43 @@ document.addEventListener('DOMContentLoaded', function () {
       cursorColor: '#000',
       height: 60,
       barWidth: 2,
-      responsive: true
+      responsive: true,
+      interact: true // Allow clicking on waveform to seek
     });
 
     wavesurfer.load(url);
     waveforms[id] = wavesurfer;
+
+    // Update play button when audio finishes
+    wavesurfer.on('finish', () => {
+      const btn = document.getElementById(`playBtn-${id}`);
+      if (btn) btn.textContent = '▶';
+    });
   });
 });
 
 function togglePlay(id) {
   const player = waveforms[id];
   const btn = document.getElementById(`playBtn-${id}`);
+  
+  if (!player || !btn) return;
+
   if (player.isPlaying()) {
     player.pause();
     btn.textContent = '▶';
   } else {
+    // Pause all other players
+    Object.keys(waveforms).forEach(wid => {
+      if (parseInt(wid) !== id) {
+        waveforms[wid].pause();
+        const otherBtn = document.getElementById(`playBtn-${wid}`);
+        if (otherBtn) otherBtn.textContent = '▶';
+      }
+    });
+    
     player.play();
     btn.textContent = '⏸';
   }
-
-  Object.keys(waveforms).forEach(wid => {
-    if (parseInt(wid) !== id) {
-      waveforms[wid].pause();
-      const otherBtn = document.getElementById(`playBtn-${wid}`);
-      if (otherBtn) otherBtn.textContent = '▶';
-    }
-  });
 }
 
 function deleteClip(elementId, audioId) {
@@ -61,7 +72,7 @@ function deleteClip(elementId, audioId) {
         }
       } else if (response.status === 401) {
         alert("Please log in to delete this clip.");
-        window.location.href = '/login/'; // Redirect to login page
+        window.location.href = '/login/';
       } else {
         alert("Delete failed: " + response.statusText);
       }

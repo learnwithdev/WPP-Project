@@ -13,9 +13,12 @@
       {% for audio in downloads %}
       <div class="download-card" id="audio-{{ audio.id }}">
         <div class="download-filename">{{ audio.file_name }}</div>
-        <div id="waveform-{{ audio.id }}" class="waveform-preview" 
-            data-audio-id="{{ audio.id }}" 
-            data-audio-url="{{ audio.file_path.url }}">
+        <div class="waveform-container">
+          <button id="playBtn-{{ audio.id }}" class="play-button" onclick="togglePlay('{{ audio.id }}')">▶</button>
+          <div id="waveform-{{ audio.id }}" class="waveform-preview" 
+              data-audio-id="{{ audio.id }}" 
+              data-audio-url="{{ audio.file_path.url }}">
+          </div>
         </div>
         <div class="download-footer">
           <span class="download-time">{{ audio.created_at|date:"Y-m-d H:i" }}</span>
@@ -33,5 +36,6 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
     <script src="{% static 'audio_editor/scripts/downloads.js' %}"></script>
 {% endblock %}
