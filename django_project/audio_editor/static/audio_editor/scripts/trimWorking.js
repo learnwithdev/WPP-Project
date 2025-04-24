@@ -1,36 +1,3 @@
-    // const sidebar = document.getElementById('sidebar');
-    // const overlay = document.getElementById('overlay');
-    // const openSidebar = document.getElementById('openSidebar');
-    // const closeSidebar = document.getElementById('closeSidebar');
-
-    // openSidebar.addEventListener('click', () => {
-    //   sidebar.classList.add('active');
-    //   overlay.classList.add('active');
-    // });
-
-    // closeSidebar.addEventListener('click', () => {
-    //   sidebar.classList.remove('active');
-    //   overlay.classList.remove('active');
-    // });
-
-    // overlay.addEventListener('click', () => {
-    //   sidebar.classList.remove('active');
-    //   overlay.classList.remove('active');
-    // });
-
-    // const audioUpload = document.getElementById('audioUpload');
-    // const fileNameDisplay = document.getElementById('fileName');
-
-    // audioUpload.addEventListener('change', () => {
-    //   const file = audioUpload.files[0];
-    //   if (file) {
-    //     fileNameDisplay.textContent = `✅ Uploaded: ${file.name}`;
-    //     fileNameDisplay.style.color = '#00796b';
-    //   } else {
-    //     fileNameDisplay.textContent = '';
-    //   }
-    // });
-
 let sliderMode = null;
 let lastPitch = 0;
 let lastVolume = 100;
@@ -247,6 +214,17 @@ function getDetuneFromPercent(percent) {
 return percent * 12; // ±100% => ±1200 cents (1 octave)
 }
 
+function getCSRFToken() {
+  const name = 'csrftoken';
+  const cookies = document.cookie.split(';');
+  for (let cookie of cookies) {
+    cookie = cookie.trim();
+    if (cookie.startsWith(name + '=')) {
+      return decodeURIComponent(cookie.substring(name.length + 1));
+    }
+  }
+  return '';
+}
 
 
 document.getElementById('trimBtn').addEventListener('click', async () => {
@@ -316,8 +294,29 @@ const html = `
   <button onclick="document.getElementById('${id}').remove()">Delete</button>
 </div>
 `;
-section.insertAdjacentHTML('beforeend', html);
-});
+    section.insertAdjacentHTML('beforeend', html);
+    const formData = new FormData();
+    const filenameInput = document.getElementById('filenameInput').value.trim();
+    const fileName = filenameInput ? filenameInput + '.wav' : 'trimmed_audio.wav';
+    formData.append('audio_file', wavBlob, fileName);
+
+
+
+    fetch('/export-audio/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': getCSRFToken()  // Make sure this function exists and works
+      }
+    }).then(res => res.json())
+      .then(data => {
+        if (data.status !== 'success') {
+          alert("Upload failed.");
+        }
+      }).catch(() => {
+        alert("Error uploading audio.");
+      });
+  });
 
 
 function bufferToWavBlob(buffer) {
@@ -436,15 +435,78 @@ for (let j = 0; j < length; j++) {
 return resampled;
 }
 
-
-
+// function downloadClip(url) {
+//   const a = document.createElement('a');
+//   a.href = url;
+//   // a.download = 'trimmed_audio.wav';
+//   a.download = fileName;
+//   document.body.appendChild(a);
+//   a.click();
+//   document.body.removeChild(a);
+// }
 function downloadClip(url) {
+  let filename = prompt("Enter file name for download (without extension):");
+  if (!filename) {
+    alert("Download canceled. No filename entered.");
+    return;
+  }
+  filename = filename.trim() + ".wav";
+
+  // Download to user’s system
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'trimmed_audio.wav';
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+
+  // Upload to server with filename
+  fetch(url)
+    .then(res => res.blob())
+    .then(blob => {
+      const formData = new FormData();
+      formData.append('audio_file', blob, filename);
+
+      return fetch('/export-audio/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': getCSRFToken()
+        }
+      });
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status !== 'success') {
+        alert("Upload failed.");
+      }
+    })
+    .catch(() => {
+      alert("Error uploading audio.");
+    });
 }
 
+function deleteClip(id, filename) {
+  if (!confirm("Are you sure you want to delete this clip?")) return;
 
+  const formData = new FormData();
+  formData.append('delete_file', filename);
+
+  fetch('/export-audio/', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'X-CSRFToken': getCSRFToken()
+    }
+  }).then(res => res.json())
+    .then(data => {
+      if (data.status === 'success') {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+      } else {
+        alert("Failed to delete audio.");
+      }
+    }).catch(() => {
+      alert("Error deleting audio.");
+    });
+}

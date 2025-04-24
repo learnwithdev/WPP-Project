@@ -15,13 +15,17 @@
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <img src="{% static 'audio_editor/images/logo.jpg' %}" alt="Profile" class="sidebar-profile-pic">
-      <span>User Name</span>
+      {% if user.is_authenticated %}
+        <span>{{ user.username }}</span>
+      {% else %}
+        <span>Guest</span>
+      {% endif %}
       <button class="close-btn" id="closeSidebar">&times;</button>
     </div>
     <nav class="sidebar-nav">
       <a href="#">Upload</a>
       <a href="#">Your Uploads</a>
-      <a href="#">Downloads</a>
+      <a href="{% url 'user_downloads' %}">Downloads</a>
       <a href="#">Edit</a>
       <a href="play.html">Play</a>
       <a href="#">Visualize</a>
@@ -58,7 +62,7 @@
       
     </div>
   </div>
-  {% block content%}{% endblock %}
+  {% block content %}{% endblock %}
 
   <footer>
     <p>© 2025 BeatStudio | <a href="#">Contact</a> | <a href="#">Settings</a></p>
