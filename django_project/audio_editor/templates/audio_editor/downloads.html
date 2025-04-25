@@ -21,12 +21,13 @@
           </div>
         </div>
         <div class="download-footer">
-          <span class="download-time">{{ audio.created_at|date:"Y-m-d H:i" }}</span>
-          <div class="download-actions">
-            <a href="{{ audio.file_path.url }}" download class="download-button">⬇ Download</a>
-            <button class="delete-button" onclick="deleteClip('audio-{{ audio.id }}', '{{ audio.id }}')">🗑 Delete</button>
+            <span class="download-time">{{ audio.created_at|date:"Y-m-d H:i" }}</span>
+            <div class="download-actions">
+              <a href="{{ audio.file_path.url }}" download class="download-button">⬇ Download</a>
+              <!-- <a href="{% url 'edit_page' %}?file_url={{ audio.file_path.url }}" class="edit-button">✏ Edit</a> -->
+              <button class="delete-button" onclick="deleteClip('audio-{{ audio.id }}', '{{ audio.id }}')">🗑 Delete</button>
+            </div>
           </div>
-        </div>
       </div>      
       {% endfor %}
     </div>

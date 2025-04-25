@@ -1,5 +1,5 @@
 /* Importing Poppins font */
-body {
+ body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     /* background:url("django_project\users\static\users\images\audioimg.jpeg"); */
@@ -8,7 +8,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+  } 
   
   .login-wrapper {
     display: flex;
@@ -16,6 +16,7 @@ body {
     align-items: center;
     height: 100%;
   }
+  
   
   .login-card {
     background: rgba(255, 255, 255, 0.1);
@@ -136,4 +137,3 @@ body {
     font-size: 0.85em;
     margin-top: 0.3em;
   }
-  

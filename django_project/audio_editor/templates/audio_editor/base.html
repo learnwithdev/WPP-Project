@@ -26,8 +26,8 @@
       <a href="#">Upload</a>
       <a href="#">Your Uploads</a>
       <a href="{% url 'downloads_list' %}">Downloads</a>
-      <a href="#">Edit</a>
-      <a href="play.html">Play</a>
+      <a href="{% url 'edit_page' %}">Edit</a>
+      <a href="#">Play</a>
       <a href="#">Visualize</a>
     </nav>
   </div>
@@ -43,19 +43,15 @@
       </div>
     </div>
     <div class="nav-links">
+      {% if request.path != '/' %}  <!-- Check if not on the main page -->
+        <a href="{% url 'editor-home' %}">Home</a>
+      {% endif %}
       {% if user.is_authenticated %}
         <form action="{% url 'logout' %}" method="post" id="logout-form">
           {% csrf_token %}
           <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();">Logout</a>
         </form>
-        <!-- <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-            <button type="submit" class="btn btn-outline-light">Logout</button>
-            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> -->
-        <!--</form> -->
       {% else %}
-        <!-- <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a> -->
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">Register</a>
       {% endif %}

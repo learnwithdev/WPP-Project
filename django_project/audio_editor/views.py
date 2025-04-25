@@ -58,4 +58,3 @@ def delete_download(request, audio_id):
 def downloads_list(request):
     downloads = AudioDownload.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'audio_editor/downloads.html', {'downloads': downloads})
-

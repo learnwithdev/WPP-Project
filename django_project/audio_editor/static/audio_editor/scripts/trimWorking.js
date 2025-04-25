@@ -6,6 +6,7 @@ let lastSpeed = 100;
 let wavesurfer;
 let currentRegion;
 
+
 document.getElementById('upload').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -435,6 +436,50 @@ for (let j = 0; j < length; j++) {
 return resampled;
 }
 
+function saveState() {
+  const state = {
+    audioBlob: audioBlob ? btoa(String.fromCharCode(...new Uint8Array(audioBlob.arrayBuffer().then(b => new Uint8Array(b))))) : null,
+    region: currentRegion ? { start: currentRegion.start, end: currentRegion.end } : null,
+    volume: document.getElementById('myRange').value,
+    pitch: document.getElementById('pitchSlider').value,
+    exportOption: document.getElementById('exportOption').value
+  };
+  localStorage.setItem('trimState', JSON.stringify(state));
+}
+
+function restoreState() {
+  const state = JSON.parse(localStorage.getItem('trimState'));
+  if (!state) return;
+
+  if (state.audioBlob) {
+    const byteArray = new Uint8Array(atob(state.audioBlob).split('').map(c => c.charCodeAt(0)));
+    audioBlob = new Blob([byteArray], { type: 'audio/*' });
+    const url = URL.createObjectURL(audioBlob);
+    wavesurfer.load(url);
+  }
+
+  if (state.region) {
+    wavesurfer.on('ready', () => {
+      currentRegion = wavesurfer.addRegion({
+        start: state.region.start,
+        end: state.region.end,
+        color: 'rgba(0, 255, 0, 0.3)'
+      });
+      updateTimes(currentRegion);
+    });
+  }
+
+  document.getElementById('myRange').value = state.volume || 50;
+  document.getElementById('volumeDisplay').textContent = `${state.volume || 50}%`;
+  wavesurfer.setVolume((state.volume || 50) / 100);
+
+  document.getElementById('pitchSlider').value = state.pitch || 0;
+  document.getElementById('pitchDisplay').textContent = `${state.pitch || 0}%`;
+  wavesurfer.setPlaybackRate(1 + (state.pitch || 0) / 100);
+
+  document.getElementById('exportOption').value = state.exportOption || 'trim';
+}
+
 // function downloadClip(url) {
 //   const a = document.createElement('a');
 //   a.href = url;
@@ -483,30 +528,5 @@ function downloadClip(url) {
     })
     .catch(() => {
       alert("Error uploading audio.");
-    });
-}
-
-function deleteClip(id, filename) {
-  if (!confirm("Are you sure you want to delete this clip?")) return;
-
-  const formData = new FormData();
-  formData.append('delete_file', filename);
-
-  fetch('/export-audio/', {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'X-CSRFToken': getCSRFToken()
-    }
-  }).then(res => res.json())
-    .then(data => {
-      if (data.status === 'success') {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-      } else {
-        alert("Failed to delete audio.");
-      }
-    }).catch(() => {
-      alert("Error deleting audio.");
     });
 }
