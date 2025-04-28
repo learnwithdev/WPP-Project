@@ -335,7 +335,6 @@ img:not(.hero-image) {
 .menu-btn:hover {
   animation: glow-hover 1.5s ease-in-out infinite;
 }
-
 .nav-links a:hover {
   animation: glow-hover 1.5s ease-in-out infinite;
 }
