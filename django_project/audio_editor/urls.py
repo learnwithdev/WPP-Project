@@ -9,4 +9,5 @@ urlpatterns = [
     path('export-audio/', views.export_audio, name='export_audio'),
     path('downloads/', views.downloads_list, name='downloads_list'),
     path('delete_download/<int:audio_id>/', views.delete_download, name='delete_download'),
+    path('visualize/', views.visualize, name='visualize')
 ]

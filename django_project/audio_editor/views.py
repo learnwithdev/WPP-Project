@@ -19,6 +19,9 @@ def edit_view(request):
 def merge_append(request):
     return render(request, 'audio_editor/merge_append.html')
 
+def visualize(request):
+    return render(request, 'audio_editor/visualize.html')
+
 def export_audio(request):
     if request.method == 'POST' and request.user.is_authenticated:
         file_data = request.FILES.get('audio_file')

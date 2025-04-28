@@ -23,12 +23,12 @@
       <button class="close-btn" id="closeSidebar">&times;</button>
     </div>
     <nav class="sidebar-nav">
-      <a href="#">Upload</a>
-      <a href="#">Your Uploads</a>
+      <!-- <a href="#">Upload</a>
+      <a href="#">Your Uploads</a> -->
       <a href="{% url 'downloads_list' %}">Downloads</a>
       <a href="{% url 'edit_page' %}">Edit</a>
-      <a href="#">Play</a>
-      <a href="#">Visualize</a>
+      <!-- <a href="#">Play</a> -->
+      <a href="{% url 'visualize' %}">Visualize</a>
     </nav>
   </div>
 

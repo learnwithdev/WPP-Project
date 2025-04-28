@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio Visualizer (All Styles)</title>
+  <link rel="stylesheet" href="{% static 'audio_editor/homecss/visualizeCSS.css' %}">
+</head>
+<body>
+  <h2>🎧 Full Audio Visualizer</h2>
+  <div id="controls">
+    <input type="file" id="audio-upload" accept="audio/*" />
+    <select id="visualizationType">
+      <option value="bars">Frequency Bars (Color)</option>
+      <option value="waveform">Waveform</option>
+      <option value="lines">Dual Line Chart</option>
+      <option value="boxplot">Boxplot</option>
+      <option value="mirror">Mirror Waveform</option>
+      <option value="glow">Glow Waveform</option>
+      <option value="spectrum">Spectrum Fill</option>
+      <option value="dots">Dotted Bars</option>
+      <option value="pulse">Pulse Bars</option>
+      <option value="rainbow">Rainbow Waves</option>
+      <option value="circle">Radial Contour</option>
+      <option value="blob">Blob Curve</option>
+    </select>
+    <button id="visualizeBtn">Visualize</button>
+    <button id="saveImageBtn">🎨 Save Image</button>
+  </div>
+
+  <canvas id="visualCanvas" width="1400" height="500"></canvas>
+  <!-- <script src="script3.js"></script> -->
+  <script src="{% static 'audio_editor/scripts/visualizeJS.js' %}"></script>
+</body>
+</html>
