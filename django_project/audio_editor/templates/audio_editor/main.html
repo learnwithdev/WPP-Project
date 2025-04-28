@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+  <div class="moving-text">Beat Studio: India's No. 1 Trusted Audio Editor</div>
   <!-- Hero Section -->
   <div class="hero">
     <img src="{% static 'audio_editor/images/hero.jpg' %}" alt="Beautiful Music" class="hero-image">
@@ -15,7 +16,7 @@
   <!-- Edit Button Section -->
 <section class="edit-section">
   <h2>Start Editing</h2>
-  <a href="{% url 'edit_page' %}" class="edit-button">Edit</a>
+  <a href="{% url 'edit_page' %}" class="edit-button">Let's Begin</a>
 </section>
 
   <!-- Features Section -->
@@ -32,7 +33,5 @@
     <p>Use spectrograms and frequency graphs to explore and fine-tune every audio detail.</p>
   </section>
 
-  <!-- <footer>
-    <p>© 2025 BeatStudio | <a href="#">Contact</a> | <a href="#">Settings</a></p>
-  </footer> -->
+  
 {% endblock %}
