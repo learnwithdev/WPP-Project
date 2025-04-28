@@ -204,15 +204,25 @@
   }
   
   /* Toolbar */
-  .top-toolbar {
+  /*.top-toolbar {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
     margin: 1rem auto;
-  }
+  }*/
+
+  .top-toolbar {
+    display: flex;
+    justify-content: space-evenly; /* Distributes items evenly */
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 1rem auto;
+    width: 90%; /* Added width */
+    max-width: 800px; /* Added max-width for control */
+}
   
-  .toolbar-btn {
+  /*.toolbar-btn {
     background: #292942;
     border: none;
     color: #00e6e6;
@@ -237,7 +247,39 @@
   
   .icon-only {
     padding: 10px;
-  }
+  }*/
+
+  .toolbar-btn {
+    background: #292942;
+    border: none;
+    color: #00e6e6;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s background-color ease; /* Smooth transition */
+}
+
+.toolbar-btn:hover {
+    background-color: #393961;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    stroke: #00e6e6;
+    transition: 0.2s stroke ease; /* Smooth transition */
+}
+
+.toolbar-btn:hover .icon {
+    stroke: #00ffff; /* Lighter color on hover */
+}
+
+.icon-only {
+    padding: 10px;
+}
   
   /* Sliders */
   #customSliderContainer,
@@ -343,5 +385,38 @@
     border-radius: 12px;
     padding: 0;
     margin: 0;
+  }
+
+  .file-upload-wrapper {
+    text-align: center;
+    margin: 2rem auto;
+  }
+  
+  .custom-file-upload {
+    display: inline-block;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00e6e6, #1fb1e2, #7f00ff);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 230, 230, 0.3);
+  }
+  
+  .custom-file-upload:hover {
+    background: linear-gradient(135deg, #7f00ff, #1fb1e2, #00e6e6);
+    box-shadow: 0 6px 20px rgba(127, 0, 255, 0.5);
+    transform: scale(1.05);
+  }
+  
+  #fileName {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #00e6e6;
+    font-size: 1rem;
+    font-weight: 600;
   }
   

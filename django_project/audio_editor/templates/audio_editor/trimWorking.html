@@ -7,10 +7,15 @@
 
   {% block content %}
     <h2>Trim Your Audio</h2>
-    <form id="uploadForm" enctype="multipart/form-data">
+    <!--<form id="uploadForm" enctype="multipart/form-data">
       {% csrf_token %}
       <input type="file" id="upload" accept="audio/*"><br><br>
-    </form>
+    </form>-->
+    <div class="file-upload-wrapper">
+      <label for="upload" class="custom-file-upload">🎧 Choose Audio File</label>
+      <input type="file" id="upload" accept="audio/*" style="display: none;">
+      <span id="fileName" style="margin-left: 15px; font-weight: bold; font-size: 1rem;"></span> 
+    </div>   
     <!-- <input type="file" id="upload" accept="audio/*"><br><br> -->
     <div class="top-toolbar">
       <button class="toolbar-btn icon-only">

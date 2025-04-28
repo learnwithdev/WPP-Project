@@ -11,6 +11,9 @@ document.getElementById('upload').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
 
+  const fileNameDisplay = document.getElementById('fileName');
+  fileNameDisplay.textContent = `✅ ${file.name}`;
+
   if (wavesurfer) {
     wavesurfer.destroy();
     document.getElementById('waveform').innerHTML = '';
