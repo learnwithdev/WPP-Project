@@ -1,139 +1,160 @@
 /* Importing Poppins font */
- body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    /* background:url("django_project\users\static\users\images\audioimg.jpeg"); */
-    background-size:cover;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } 
-  
-  .login-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  
-  
-  .login-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border-radius: 16px;
-    padding: 2.5em;
-    width: 300px;
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-    color: white;
-    text-align: center;
-    display:flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-  }
-  
-  .login-card h1 {
-    margin-bottom: 1.5em;
-    font-weight: 600;
-    font-size: 1.8em;
-  }
-  
-  .input-group {
-    position: relative;
-    margin-bottom: 1.5em;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 0.9em 0.75em;
-    background: transparent;
-    border: 2px solid #fff;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 1em;
-    outline: none;
-  }
-  
-  .input-group label {
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    transform: translateY(-50%);
-    background-color: transparent;
-    color: #fff;
-    pointer-events: none;
-    transition: 0.3s ease;
-  }
-  
-  .input-group input:focus + label,
-  .input-group input:valid + label {
-    top: 0;
-    left: 10px;
-    font-size: 0.75em;
-    background: rgba(78, 84, 200, 0.8);
-    padding: 0 4px;
-    border-radius: 4px;
-  }
-  
-  .login-btn {
-    width: 100%;
-    padding: 0.9em;
-    background: #fff;
-    color: #4e54c8;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .login-btn:hover {
-    background: #eee;
-  }
-  
-  /* CAPTCHA Styles */
-  .captcha-container {
-    margin: 1.5em 0;
-    text-align: left;
-  }
-  
-  .captcha-box {
-    background: #f0eeee33;
-    border: 1px dashed #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6em 1em;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 1.1em;
-    color: #fdfafa;
-    letter-spacing: 4px;
-    user-select: none;
-    margin-bottom: 0.5em;
-  }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  #captchaInput {
-    width: 100%;
-    padding: 0.8em;
-    background: transparent;
-    border-radius: 8px;
-    border: 1px solid #f5f4f4;
-    font-size: 1em;
-    color:#e9e0e0;
-  }
-  
-  #refreshCaptcha {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-left: 10px;
-  }
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 2.5em;
+  width: 300px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.login-card h1 {
+  margin-bottom: 1.5em;
+  font-weight: 600;
+  font-size: 1.8em;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1.5em;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.9em 0.75em;
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1em;
+  outline: none;
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: 0;
+  left: 10px;
+  font-size: 0.75em;
+  background: rgba(78, 84, 200, 0.8);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.9em;
+  background: #fff;
+  color: #4e54c8;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  background: #eee;
+}
+
+/* CAPTCHA Styles */
+.captcha-container {
+  margin: 1.5em 0;
+  text-align: left;
+}
+
+.captcha-box {
+  background: #f0eeee33;
+  border: 1px dashed #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6em 1em;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 1.1em;
+  color: #fdfafa;
+  letter-spacing: 4px;
+  user-select: none;
+  margin-bottom: 0.5em;
+}
+
+#captchaInput {
+  width: 100%;
+  padding: 0.8em;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid #f5f4f4;
+  font-size: 1em;
+  color:#e9e0e0;
+}
+
+#refreshCaptcha {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .error-message {
-    color: #ff4d4d;
-    font-size: 0.85em;
-    margin-top: 0.3em;
-  }
+  color: #ff4d4d;
+  font-size: 0.85em;
+  margin-top: 0.3em;
+}
+
+/* Top-right buttons */
+.navbar {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  display: flex;
+  gap: 1em;
+}
+
+.navbar a {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
