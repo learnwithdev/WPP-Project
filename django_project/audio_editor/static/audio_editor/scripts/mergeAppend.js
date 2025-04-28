@@ -165,11 +165,42 @@ document.getElementById('processBtn').addEventListener('click', () => {
   outputWavesurfer.loadBlob(wavBlob);
 
   document.getElementById('downloadOutput').style.display = 'inline-block';
+  // document.getElementById('downloadOutput').onclick = () => {
+  //   const a = document.createElement('a');
+  //   a.href = URL.createObjectURL(wavBlob);
+  //   a.download = `${mode}_audio.wav`;
+  //   a.click();
+  // };
   document.getElementById('downloadOutput').onclick = () => {
+    const downloadUrl = URL.createObjectURL(wavBlob);
+
+    // 1. Let user download locally
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(wavBlob);
+    a.href = downloadUrl;
     a.download = `${mode}_audio.wav`;
     a.click();
+
+    // 2. Upload to server (save to downloads)
+    const formData = new FormData();
+    formData.append('audio_file', wavBlob, `${mode}_audio.wav`);
+
+    fetch('/export-audio/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': getCSRFToken()  // Make sure getCSRFToken() function exists
+        }
+    }).then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert("Merged audio saved to Downloads!");
+        } else {
+          alert("Failed to save merged audio.");
+        }
+      })
+      .catch(() => {
+        alert("Error uploading merged audio.");
+      });
   };
 });
 
@@ -179,3 +210,15 @@ document.getElementById('processBtn').addEventListener('click', () => {
     if (wf) wf.playPause();
   });
 });
+
+function getCSRFToken() {
+  const name = 'csrftoken';
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    let c = cookies[i].trim();
+    if (c.startsWith(name + '=')) {
+      return decodeURIComponent(c.substring(name.length + 1));
+    }
+  }
+  return '';
+}
