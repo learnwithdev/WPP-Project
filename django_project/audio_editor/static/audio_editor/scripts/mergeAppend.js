@@ -70,8 +70,13 @@ function loadAudio(fileInput, callback) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = () => {
-    ac.decodeAudioData(reader.result, callback);
-  };
+    ac.decodeAudioData(reader.result, callback, (error) => {
+        console.error("Error decoding audio data:", error);
+    });
+};
+reader.onerror = (error) => {
+  console.error("Error reading file:", error);
+};
   reader.readAsArrayBuffer(file);
 }
 
@@ -137,20 +142,30 @@ function normalizeBuffer(buffer) {
 }
 
 ['audio1', 'audio2'].forEach((id, index) => {
-  document.getElementById(id).addEventListener('change', () => {
-    loadAudio(document.getElementById(id), (buffer) => {
-      if (index === 0) {
-        audioBuffer1 = buffer;
-        if (wavesurfer1) wavesurfer1.destroy();
-        wavesurfer1 = initWaveSurfer('#waveform1');
-        wavesurfer1.loadBlob(new Blob([createWavBlobFromBuffer(audioBuffer1)]));
+  //c1
+  const fileInput = document.getElementById(id);
+  const filenameDisplay = document.getElementById(`fileName${index + 1}`); // Target unique IDs
+
+  fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+          filenameDisplay.textContent = `✅ ${file.name}`; // Update the specific span
       } else {
-        audioBuffer2 = buffer;
-        if (wavesurfer2) wavesurfer2.destroy();
-        wavesurfer2 = initWaveSurfer('#waveform2');
-        wavesurfer2.loadBlob(new Blob([createWavBlobFromBuffer(audioBuffer2)]));
+          filenameDisplay.textContent = '';
       }
-    });
+      loadAudio(document.getElementById(id), (buffer) => {
+          if (index === 0) {
+              audioBuffer1 = buffer;
+              if (wavesurfer1) wavesurfer1.destroy();
+              wavesurfer1 = initWaveSurfer('#waveform1');
+              wavesurfer1.loadBlob(new Blob([createWavBlobFromBuffer(audioBuffer1)]));
+          } else {
+              audioBuffer2 = buffer;
+              if (wavesurfer2) wavesurfer2.destroy();
+              wavesurfer2 = initWaveSurfer('#waveform2');
+              wavesurfer2.loadBlob(new Blob([createWavBlobFromBuffer(audioBuffer2)]));
+          }
+      });
   });
 });
 

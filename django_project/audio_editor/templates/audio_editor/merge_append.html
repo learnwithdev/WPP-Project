@@ -75,8 +75,20 @@
 {% block content %}
     <h2>Merge or Append Audio</h2>
 
-    <input type="file" id="audio1" accept="audio/*">
-    <input type="file" id="audio2" accept="audio/*">
+    <!--<input type="file" id="audio1" accept="audio/*">
+    <input type="file" id="audio2" accept="audio/*"> -->
+
+    <div class="file-upload-wrapper">
+      <label for="audio1" class="custom-file-upload">🎧 Choose Audio File</label>
+      <input type="file" id="audio1" accept="audio/*" style="display: none;">
+      <span id="fileName1" style="margin-left: 15px; font-weight: bold; font-size: 1rem;"></span>
+  </div>
+  
+  <div class="file-upload-wrapper">
+      <label for="audio2" class="custom-file-upload">🎧 Choose Audio File</label>
+      <input type="file" id="audio2" accept="audio/*" style="display: none;">
+      <span id="fileName2" style="margin-left: 15px; font-weight: bold; font-size: 1rem;"></span>
+  </div> 
 
     <select id="operation">
         <option value="merge">Merge</option>
